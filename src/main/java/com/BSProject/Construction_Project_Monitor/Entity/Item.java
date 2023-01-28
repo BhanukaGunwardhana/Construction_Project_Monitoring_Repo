@@ -16,14 +16,14 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class Items {
+public class Item {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int itemId;
     private String itemName;
     private int itemUnitPrice;
     private int totatlWork;
-    private int completedPercentage;
+    private double completedPercentage;
     private int completedWorkDone;
     private int income;
 

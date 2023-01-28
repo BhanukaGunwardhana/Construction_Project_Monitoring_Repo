@@ -10,6 +10,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -32,7 +33,20 @@ public class Project {
         cascade = CascadeType.REMOVE
     )
 
-    private List<Items> items;
+    private List<Item> itemList;
 
+    @OneToMany(
+        mappedBy = "project",
+        cascade = CascadeType.REMOVE
+    )
+
+    private List<Resource> resourceList;
+
+    @OneToOne(
+        mappedBy = "project",
+        cascade = CascadeType.REMOVE
+    )
+
+    private Result result;
    
 }
