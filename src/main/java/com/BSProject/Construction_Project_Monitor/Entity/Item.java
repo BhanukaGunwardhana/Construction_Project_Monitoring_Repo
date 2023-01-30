@@ -22,7 +22,7 @@ public class Item {
     private int itemId;
     private String itemName;
     private int itemUnitPrice;
-    private int totatlWork;
+    private int totalWork;
     private double completedPercentage;
     private int completedWorkDone;
     private int income;

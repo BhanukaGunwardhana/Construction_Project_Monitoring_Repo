@@ -32,19 +32,44 @@ public class ResultService {
         for (Item i: project.getItemList()){
             income=income+i.getIncome();
         }
-        String state;
+        String status;
         int dif=income-cost;
-        if(dif>0){state="making profits";}
-        else if(dif<0){state="making losses";}
-        else{state="breakeven";}
+        if(dif>0){status="making profits";}
+        else if(dif<0){status="making losses";}
+        else{status="breakeven";}
         Result result=new Result();
         result.setProject(project);
-        result.setResultState(state);
-        result.setResultStateAmount(dif);
+        result.setResultStatus(status);
+        result.setResultStatusAmount(dif);
+        result.setCalculated(true);
         
         resultRepository.save(result);
         
 
 
+    }
+    public void calculateAllProjectsStatus(){
+        for(Project project: projectRepository.findAll()){
+            int income=0;
+            int cost=0;
+            for (Resource r: project.getResourceList()){
+                cost=cost+r.getCost();
+            }
+            for (Item i: project.getItemList()){
+                income=income+i.getIncome();
+            }
+            String status;
+            int dif=income-cost;
+            if(dif>0){status="making profits";}
+            else if(dif<0){status="making losses";}
+            else{status="breakeven";}
+            Result result=new Result();
+            result.setProject(project);
+            result.setResultStatus(status);
+            result.setResultStatusAmount(dif);
+            result.setCalculated(true);
+        
+            resultRepository.save(result);
+        } 
     }
 }

@@ -20,8 +20,9 @@ public class Result {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int resultId;
-    private String resultState;
-    private int resultStateAmount;
+    private String resultStatus;
+    private int resultStatusAmount;
+    private boolean calculated=false;
 
     @OneToOne(
         

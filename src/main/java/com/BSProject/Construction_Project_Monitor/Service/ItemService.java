@@ -26,9 +26,9 @@ public class ItemService {
         Optional<Project> projectOptional=projectRepository.findById(itemDTO.getProjectId());
         Project project=projectOptional.get();
         item.setProject(project);
-        item.setTotatlWork(itemDTO.getItemTotalWorkDTO());
+        item.setTotalWork(itemDTO.getItemTotalWorkDTO());
         item.setCompletedPercentage(itemDTO.getItemCompletedPercentageDTO());
-        item.setCompletedWorkDone((int) (item.getTotatlWork()*item.getCompletedPercentage()));
+        item.setCompletedWorkDone((int) (item.getTotalWork()*item.getCompletedPercentage()));
         item.setItemUnitPrice(itemDTO.getItemUnitPriceDTO());
         item.setIncome(item.getCompletedWorkDone()*item.getItemUnitPrice());
     
@@ -36,5 +36,7 @@ public class ItemService {
         itemRepository.save(item);
         
     }
+
+    
     
 }

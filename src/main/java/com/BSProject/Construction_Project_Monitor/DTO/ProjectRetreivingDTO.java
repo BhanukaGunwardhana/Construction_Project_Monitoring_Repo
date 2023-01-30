@@ -14,5 +14,18 @@ public class ProjectRetreivingDTO {
     private String pojectRetreivingDTOName;
     private String projectState;
     private int projectStateAmount;
+
+    
+
+   public String toString(){
+        return 
+            ("projectId :"+this.projectId+"\n"+
+                "projectRetreivingDTO :"+this.pojectRetreivingDTOName+"\n"+
+                "projectState :"+this.projectState+"\n"+
+                "projectStateAmount :"+this.projectStateAmount
+            )
+        ;
+   }
+
     
 }
