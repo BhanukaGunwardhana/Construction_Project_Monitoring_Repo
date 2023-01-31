@@ -25,5 +25,13 @@ public class ItemRepositoryTest {
 
         itemService.postingItem(itemDTO);
     }
+    @Test
+    public void updateItemCompletedPercentage(){
+        itemService.updateItemCompletedPercentage(4, 0.3);
+    }
+    @Test
+    public void deleteItemByItemId(){
+        itemService.deleteItemByItemId(3);
+    }
 
 }

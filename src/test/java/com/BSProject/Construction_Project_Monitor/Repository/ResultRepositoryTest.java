@@ -14,4 +14,10 @@ public class ResultRepositoryTest {
     public void testPostingResult(){
         resultService.postingResult(1);
     }
+
+    @Test
+    public void testUpdateResult(){
+        resultService.updateResult(1);
+    }
+    
 }

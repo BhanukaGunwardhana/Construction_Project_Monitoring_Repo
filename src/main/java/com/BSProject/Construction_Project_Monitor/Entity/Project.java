@@ -37,14 +37,14 @@ public class Project {
 
     @OneToMany(
         mappedBy = "project",
-        cascade = CascadeType.REMOVE
+        cascade = {CascadeType.REMOVE,CascadeType.REFRESH}
     )
 
     private List<Resource> resourceList;
 
     @OneToOne(
         mappedBy = "project",
-        cascade = CascadeType.REMOVE
+        cascade = {CascadeType.REMOVE,CascadeType.REFRESH}
     )
 
     private Result result;

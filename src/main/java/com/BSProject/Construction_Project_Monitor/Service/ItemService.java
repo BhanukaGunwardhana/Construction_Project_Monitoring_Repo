@@ -20,6 +20,10 @@ public class ItemService {
     ItemRepository itemRepository;
     @Autowired
     ProjectRepository projectRepository;
+    @Autowired
+    Mapping mapping;
+    @Autowired
+    ResultService resultService;
     public void postingItem(ItemDTO itemDTO){
         Item item=new Item();
         item.setItemName(itemDTO.getItemNameDTO());
@@ -36,6 +40,33 @@ public class ItemService {
         itemRepository.save(item);
         
     }
+    public void updateItemByItemId(ItemDTO itemDTO,int itemId){
+        Optional<Item> opItem = itemRepository.findById(itemId);
+        Item item=opItem.get();
+        mapping.mapItemDTOtoItem(itemDTO, item);
+        itemRepository.save(item);
+        resultService.updateResult(item.getProject().getProjectId());
+
+    }
+
+    public void updateItemCompletedPercentage(int itemId,double completedPercentage){
+        Optional<Item> opItem = itemRepository.findById(itemId);
+        Item item=opItem.get();
+        item.setCompletedPercentage(completedPercentage);
+        item.setCompletedWorkDone((int) (item.getTotalWork()*item.getCompletedPercentage()));
+        item.setIncome(item.getCompletedWorkDone()*item.getItemUnitPrice());
+        itemRepository.save(item);
+        resultService.updateResult(item.getProject().getProjectId());
+    }
+    public void deleteItemByItemId(int itemId){
+        Optional<Item> opItem = itemRepository.findById(itemId);
+        Item item=opItem.get();
+        Project project=item.getProject();
+        itemRepository.delete(item);
+        
+        resultService.updateResult(project.getProjectId());
+    }
+
 
     
     

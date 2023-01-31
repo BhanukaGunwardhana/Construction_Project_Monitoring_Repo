@@ -16,12 +16,14 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+
 public class Result {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int resultId;
     private String resultStatus;
     private int resultStatusAmount;
+    @Builder.Default
     private boolean calculated=false;
 
     @OneToOne(

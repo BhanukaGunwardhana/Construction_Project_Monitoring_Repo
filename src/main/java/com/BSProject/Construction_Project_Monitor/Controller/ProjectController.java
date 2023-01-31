@@ -1,5 +1,7 @@
 package com.BSProject.Construction_Project_Monitor.Controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -13,6 +15,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.BSProject.Construction_Project_Monitor.DTO.ProjectDTO;
 import com.BSProject.Construction_Project_Monitor.DTO.ProjectRetreivingDTO;
 import com.BSProject.Construction_Project_Monitor.DTO.ResourceDTO;
+import com.BSProject.Construction_Project_Monitor.Entity.Item;
+import com.BSProject.Construction_Project_Monitor.Entity.Resource;
 import com.BSProject.Construction_Project_Monitor.Service.ProjectService;
 
 @RestController
@@ -33,10 +37,13 @@ public class ProjectController {
 
         return projectService.gettingProject(projectId);
     }
-    @PutMapping("/putting/{projectId}/{resourceName}")
-    public String updateProjectResource(@PathVariable int projectId,@PathVariable String resourceName,@RequestBody ResourceDTO resourceDTO){
-        projectService.updateProjectResource(projectId,resourceName,resourceDTO);
-        return "resource updated successfully";
+    @GetMapping("/gettingprojectresources/{projectId}")
+    public List<Resource> getProjectResources(@PathVariable int projectId){
+        return projectService.gettingProjectResouces(projectId);
+    }
+    @GetMapping("/gettingprojectitems/{projectId}")
+    public List<Item> getProjectItems(@PathVariable int projectId){
+        return projectService.gettingProjectItems(projectId);
     }
     
 

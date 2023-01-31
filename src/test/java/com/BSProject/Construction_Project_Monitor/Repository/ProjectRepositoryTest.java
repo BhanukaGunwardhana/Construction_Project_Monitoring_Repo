@@ -29,4 +29,8 @@ public class ProjectRepositoryTest {
         ProjectRetreivingDTO prDTO = projectService.gettingProject(1);
         System.out.println(prDTO.toString());
     } 
+    @Test
+    public void testdeleteProjectByProjectId(){
+        projectService.deleteProjectByProjectId(1);
+    }
 }

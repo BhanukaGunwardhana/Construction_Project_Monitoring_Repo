@@ -26,4 +26,14 @@ public class ResourceRepositoryTest {
        
         resourceService.postingResource(resourceDTO);
     }
+
+    @Test
+    public void testupdateResourceByResourceId(){
+        ResourceDTO resourceDTO=ResourceDTO.builder()
+        .resourceNameDTO("updatedResourceName2")
+        .build();
+
+        resourceService.updateResourceByResourceId(1, resourceDTO);
+        
+    }
 }

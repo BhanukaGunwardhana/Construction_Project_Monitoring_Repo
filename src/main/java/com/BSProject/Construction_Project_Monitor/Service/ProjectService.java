@@ -13,8 +13,10 @@ import com.BSProject.Construction_Project_Monitor.DTO.ResourceDTO;
 import com.BSProject.Construction_Project_Monitor.Entity.Item;
 import com.BSProject.Construction_Project_Monitor.Entity.Project;
 import com.BSProject.Construction_Project_Monitor.Entity.Resource;
+import com.BSProject.Construction_Project_Monitor.Entity.Result;
 import com.BSProject.Construction_Project_Monitor.Repository.ProjectRepository;
 import com.BSProject.Construction_Project_Monitor.Repository.ResourceRepository;
+import com.BSProject.Construction_Project_Monitor.Repository.ResultRepository;
 
 import jakarta.transaction.Transactional;
 
@@ -25,6 +27,8 @@ public class ProjectService {
     ProjectRepository projectRepository;
     @Autowired
     ResourceRepository resourceRepository;
+    @Autowired
+    ResultRepository resultRepository;
     @Autowired
     ResultService resultService;
     @Autowired
@@ -40,12 +44,18 @@ public class ProjectService {
 
     public ProjectRetreivingDTO gettingProject(int projectId){
         
+        
+
         ProjectRetreivingDTO projectRetreivingDTO=new ProjectRetreivingDTO();
         Optional<Project> opProject=projectRepository.findById(projectId);
         Project project=opProject.get();
-        if(!project.getResult().isCalculated()){
+        /*if(project.getResult()==null){
             resultService.postingResult(projectId);
-        }
+        }*
+        /*if(!project.getResult().isCalculated()){
+            resultService.postingResult(projectId);
+            project.getResult().setCalculated(true);
+        }*/
         projectRetreivingDTO.setPojectRetreivingDTOName(project.getProjectname());
         projectRetreivingDTO.setProjectState(project.getResult().getResultStatus());
         projectRetreivingDTO.setProjectStateAmount(project.getResult().getResultStatusAmount());
@@ -66,28 +76,48 @@ public class ProjectService {
         return project.getItemList();
         
     }
-
+    public void deleteProjectByProjectId(int projectId){
+        Optional<Project> opProject = projectRepository.findById(projectId);
+        Project project=opProject.get();
+        projectRepository.delete(project);
+    }
+    /* 
     public void updateProjectResource(int projectId, String resourceName,ResourceDTO resourceDTO) {
         Optional<Project> opProject = projectRepository.findById(projectId);
         Project project=opProject.get();
+        Project project_=null;
         for (Resource resource:project.getResourceList() ){
             if(resource.getResourceName().equalsIgnoreCase(resourceName)){
-                resource.setResourceName(resourceDTO.getResourceNameDTO());
-                Optional<Project> opProject_ = projectRepository.findById(resourceDTO.getProjectId());
-                Project project_=opProject_.get();
-                resource.setProject(project_);
-                resource.setResourceAmount(resourceDTO.getResourceAmountDTO());
-                resource.setResourceUnitPrice(resourceDTO.getResourceUnitPriceDTO());
-                resource.setCost(resource.getResourceAmount()*resource.getResourceUnitPrice());
-
+                if(resourceDTO.getResourceNameDTO()!=null){
+                    resource.setResourceName(resourceDTO.getResourceNameDTO());
+                }
+                if(resourceDTO.getProjectId()!=0){
+                    Optional<Project> opProject_ = projectRepository.findById(resourceDTO.getProjectId());
+                    project_=opProject_.get();
+                    resource.setProject(project_);
+                }
+                if(resourceDTO.getResourceAmountDTO()!=0){
+                    resource.setResourceAmount(resourceDTO.getResourceAmountDTO());
+                }
+                if(resourceDTO.getResourceUnitPriceDTO()!=0){
+                    resource.setResourceUnitPrice(resourceDTO.getResourceUnitPriceDTO());
+                }
+                if(resourceDTO.getResourceAmountDTO()!=0 || resourceDTO.getResourceUnitPriceDTO()!=0){
+                    resource.setCost(resource.getResourceAmount()*resource.getResourceUnitPrice());
+                }
                 resourceRepository.save(resource);
 
                 
             }
         }
+        resultService.postingResult(projectId);
+        if(project_!=null){
+            resultService.postingResult(projectId);
+        }
 
 
-    }
+
+    }*/
 
 
     

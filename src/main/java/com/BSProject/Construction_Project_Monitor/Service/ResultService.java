@@ -72,4 +72,29 @@ public class ResultService {
             resultRepository.save(result);
         } 
     }
+    public void updateResult(int projectId){
+        Optional<Project> opProject=projectRepository.findById(projectId);
+        Project project=opProject.get();
+        Result result=project.getResult();
+        int income=0;
+        int cost=0;
+        for (Resource r: project.getResourceList()){
+            cost=cost+r.getCost();
+        }
+        for (Item i: project.getItemList()){
+            income=income+i.getIncome();
+        }
+        String status;
+        int dif=income-cost;
+        if(dif>0){status="making profits";}
+        else if(dif<0){status="making losses";}
+        else{status="breakeven";}
+        
+        result.setProject(project);
+        result.setResultStatus(status);
+        result.setResultStatusAmount(dif);
+        result.setCalculated(true);
+        
+        resultRepository.save(result);
+    }
 }

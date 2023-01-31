@@ -1,5 +1,6 @@
 package com.BSProject.Construction_Project_Monitor.Entity;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -26,6 +27,7 @@ public class Resource {
     private int cost;
 
     @ManyToOne(
+        cascade = {CascadeType.REFRESH}
 
     )
     @JoinColumn(
